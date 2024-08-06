@@ -29,17 +29,22 @@ int main (int argc, char* argv[])
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	
-	SDL_SetRenderDrawColor(renderer, 54, 54, 54, 255);
-	SDL_RenderClear(renderer);
 
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_Rect rect = {20, 20, 100, 100};
-	SDL_RenderDrawRect(renderer, &rect);
-
-	SDL_RenderPresent(renderer);
 	
-	SDL_Delay(3000);
+	SDL_Event event;
+	while (true)
+	{
+		SDL_PollEvent(&event);
+		if (event.type == SDL_QUIT) { break; }
+			
+		SDL_SetRenderDrawColor(renderer, 54, 54, 54, 255);
+		SDL_RenderClear(renderer);
+
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_RenderDrawRect(renderer, &rect);
+		SDL_RenderPresent(renderer);
+	}	
 	
 	SDL_Quit();
 	return 0;
