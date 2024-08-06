@@ -41,10 +41,13 @@ int main (int argc, char* argv[])
 		SDL_SetRenderDrawColor(renderer, 54, 54, 54, 255);
 		SDL_RenderClear(renderer);
 
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-		SDL_RenderDrawRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, 110, 184, 217, 255);
+		SDL_RenderFillRect(renderer, &rect);
 		SDL_RenderPresent(renderer);
 	}	
+
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 	
 	SDL_Quit();
 	return 0;
