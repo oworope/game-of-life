@@ -4,15 +4,13 @@ project('game-of-life', 'cpp',
 
 src = [
   'src/main.cpp',
-  'src/grid.cpp'
 ]
 
 incl_dir = include_directories('include')
 
-sdl2_dep = dependency('sdl2')
-sdl2main_dep = dependency('sdl2main')
+sfml_dep = dependency('sfml')
 
 executable('game-of-life', src,
   win_subsystem: 'windows',
-  dependencies: [sdl2_dep, sdl2main_dep],
+  dependencies: sfml_dep,
   include_directories: incl_dir)
