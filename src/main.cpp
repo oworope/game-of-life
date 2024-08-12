@@ -1,4 +1,5 @@
 #include "SDL.h"
+#include "vars.hpp"
 
 int main (int argc, char* argv[])
 {
@@ -17,8 +18,8 @@ int main (int argc, char* argv[])
 		 "Game of Life",
 		 SDL_WINDOWPOS_UNDEFINED,
 		 SDL_WINDOWPOS_UNDEFINED,
-		 640,
-		 480,
+		 WINDOW_SIZE_X,
+		 WINDOW_SIZE_Y,
 		 SDL_WINDOW_SHOWN
 	);
 
@@ -30,7 +31,7 @@ int main (int argc, char* argv[])
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	SDL_Rect rect = {20, 20, 100, 100};
+	SDL_Rect rect = {20, 20, 10, 10};
 	
 	SDL_Event event;
 	while (true)
@@ -38,10 +39,10 @@ int main (int argc, char* argv[])
 		SDL_PollEvent(&event);
 		if (event.type == SDL_QUIT) { break; }
 			
-		SDL_SetRenderDrawColor(renderer, 54, 54, 54, 255);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
-		SDL_SetRenderDrawColor(renderer, 110, 184, 217, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderFillRect(renderer, &rect);
 		SDL_RenderPresent(renderer);
 	}	
