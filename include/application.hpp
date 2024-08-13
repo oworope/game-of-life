@@ -8,14 +8,14 @@
 class Application
 {
 	private:
-		Application::Application();
 		void handleEvents();
 
 		sf::RenderWindow m_window;
 		bool cells[WINDOW_SX / CELL_SIZE][WINDOW_SY / CELL_SIZE];
 	
 	public:
+		Application::Application();
 		void run();
-}
+};
 
 #endif

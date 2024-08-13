@@ -29,13 +29,12 @@ void Application::run()
 				if (this->cells[x][y] == true)
 				{
 					sf::RectangleShape square(sf::Vector2f(3.0f, 2.0f));
-					window->draw(square);
+					m_window.draw(square);
 				}
 			}
 		}
 		m_window.display();
 	}
-	return 0;
 }
 
 void Application::handleEvents()
@@ -44,6 +43,6 @@ void Application::handleEvents()
 	while (m_window.pollEvent(event))
 	{
 		// "close requested" event: we close the window
-		if (event.type == sf::Event::Closed) window.close();
+		if (event.type == sf::Event::Closed) m_window.close();
 	}
 }
