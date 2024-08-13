@@ -32,6 +32,7 @@ void Application::run()
 		m_window.display();
 
 		handleEvents();
+		sf::sleep(sf::milliseconds(20));
 	}
 }
 
