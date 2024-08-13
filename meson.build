@@ -4,6 +4,7 @@ project('game-of-life', 'cpp',
 
 src = [
   'src/main.cpp',
+  'src/application.cpp'
 ]
 
 incl_dir = include_directories('include')
