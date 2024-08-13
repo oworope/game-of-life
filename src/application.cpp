@@ -6,16 +6,10 @@
 Application::Application()
 	: m_window(sf::VideoMode(WINDOW_SX, WINDOW_SY), "Game of life")
 {
-	m_window.setVerticalSyncEnabled(true);
+	// m_window.setVerticalSyncEnabled(true);
+	m_window.setFramerateLimit(10);
 	srand(std::time(nullptr));
-
-	for (int x = 0; x < WINDOW_SX / CELL_SIZE; x++)
-	{
-		for (int y = 0; y < WINDOW_SY / CELL_SIZE; y++)
-		{
-			m_cells[x][y] = rand() % 2;
-		}
-	}
+	randomize();
 }
 
 void Application::run()
@@ -47,6 +41,42 @@ void Application::handleEvents()
 	while (m_window.pollEvent(event))
 	{
 		// "close requested" event: we close the window
-		if (event.type == sf::Event::Closed) m_window.close();
+		switch (event.type)
+		{
+			case sf::Event::Closed: 
+			{
+				m_window.close();
+				break;
+			}
+			case sf::Event::KeyPressed:
+			{
+				switch (event.key.scancode)
+				{
+					case sf::Keyboard::Scan::Escape:
+					{
+						m_window.close();
+						break;
+					}
+					case sf::Keyboard::Scan::Space:
+					{
+						randomize();
+						break;
+					}
+					default: break;
+				}
+			}
+		default: break;
+		}
+	}
+}
+
+void Application::randomize()
+{
+	for (int x = 0; x < WINDOW_SX / CELL_SIZE; x++)
+	{
+		for (int y = 0; y < WINDOW_SY / CELL_SIZE; y++)
+		{
+			m_cells[x][y] = rand() % 2;
+		}
 	}
 }
