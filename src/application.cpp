@@ -1,14 +1,12 @@
+#include <random>
 #include <Application.hpp>
 #include <defs.hpp>
-#include <ctime>
-#include <cstdlib>
 
 Application::Application()
 	: m_window(sf::VideoMode(WINDOW_SX, WINDOW_SY), "Game of life")
 {
 	// m_window.setVerticalSyncEnabled(true);
 	m_window.setFramerateLimit(10);
-	srand(std::time(nullptr));
 	randomize();
 }
 
@@ -24,7 +22,11 @@ void Application::run()
 				if (m_cells[x][y] == true)
 				{
 					sf::RectangleShape square(sf::Vector2f(CELL_SIZE, CELL_SIZE));
-					square.setPosition(x * CELL_SIZE, y * CELL_SIZE);
+					square.setPosition
+					(
+					 	static_cast<float>(x * CELL_SIZE),
+						static_cast<float>(y * CELL_SIZE)
+					);
 					m_window.draw(square);
 				}
 			}
@@ -73,11 +75,16 @@ void Application::handleEvents()
 
 void Application::randomize()
 {
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(1, 10000);
+	
 	for (int x = 0; x < WINDOW_SX / CELL_SIZE; x++)
 	{
 		for (int y = 0; y < WINDOW_SY / CELL_SIZE; y++)
 		{
-			m_cells[x][y] = rand() % 2;
+			m_cells[x][y] = dis(gen) % 2;
 		}
 	}
 }
