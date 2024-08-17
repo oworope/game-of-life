@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <random>
 #include <Application.hpp>
 #include <defs.hpp>
@@ -6,7 +7,7 @@ Application::Application()
 	: m_window(sf::VideoMode(WINDOW_SX, WINDOW_SY), "Game of life")
 {
 	// m_window.setVerticalSyncEnabled(true);
-	m_window.setFramerateLimit(1);
+	m_window.setFramerateLimit(10);
 	randomize();
 }
 
@@ -27,7 +28,7 @@ void Application::run()
 					{
 						if
 						(
-							m_live_cells[!m_tick_state][x + i][y + j] == true
+							m_pres_cells[x + i][y + j] == true
 						    && i != 0
 						    && j != 0
 						)
@@ -36,23 +37,19 @@ void Application::run()
 						}
 					}
 				}
-				// if (m_live_cells[!m_tick_state][x][y] == true)
-				// {
-				// 	if (counter < 2 || counter > 3)
-				// 	{
-				// 		m_live_cells[m_tick_state][x][y] = false;
-				// 	}
-				// }
-				// else
-				// {
-				// 	if (counter == 3)
-				// 	{
-				// 		m_live_cells[m_tick_state][x][y] = true;
-				// 	}
-				// }
-				if (m_live_cells[!m_tick_state][x][y] == true)
+				if (m_past_cells[x][y] == true)
 				{
-					if (counter > 5) { m_live_cells[m_tick_state][x][y] = false; }
+					if (counter < 2 || counter > 3)
+					{
+						m_pres_cells[x][y] = false;
+					}
+				}
+				else
+				{
+					if (counter == 3)
+					{
+						m_pres_cells[x][y] = true;
+					}
 				}
 			}
 		}
@@ -66,7 +63,7 @@ void Application::run()
 		{
 			for (int y = 0; y < WINDOW_SY / CELL_SIZE; y++)
 			{
-				if (m_live_cells[!m_tick_state][x][y] == true)
+				if (m_pres_cells[x][y] == true)
 				{
 					sf::RectangleShape square(sf::Vector2f(CELL_SIZE, CELL_SIZE));
 					square.setPosition
@@ -79,7 +76,15 @@ void Application::run()
 			}
 		}
 		m_window.display();
-		m_tick_state = !m_tick_state; // next tick
+
+		// copy present state to past
+		// std::copy(std::begin(m_pres_cells), std::end(m_pres_cells), std::begin(m_past_cells));
+		std::copy
+		(
+			&m_pres_cells[0][0],
+			&m_pres_cells[0][0] + (WINDOW_SX / CELL_SIZE) * (WINDOW_SY / CELL_SIZE),
+			&m_past_cells[0][0]
+		);
 
 		handleEvents();
 		// sf::sleep(sf::milliseconds(20));
@@ -132,9 +137,8 @@ void Application::randomize()
 	{
 		for (int y = 0; y < WINDOW_SY / CELL_SIZE; y++)
 		{
-			m_live_cells[0][x][y] = dis(gen) % 2;
+			m_pres_cells[x][y] = dis(gen) % 2;
 		}
 	}
 
-	m_tick_state = 1;
 }
