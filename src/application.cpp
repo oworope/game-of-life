@@ -26,30 +26,25 @@ void Application::run()
 				{
 					for (int j = -1; j < 2; j++)
 					{
-						if
-						(
-							m_pres_cells[x + i][y + j] == true
-						    && i != 0
-						    && j != 0
-						)
+						if (m_pres_cells[x + i][y + j] == true)
+
+						// i != 0 && j != 0
 						{
 							counter++;
 						}
 					}
 				}
-				if (m_past_cells[x][y] == true)
+				if (m_past_cells[x][y] == false && counter == 3)
 				{
-					if (counter < 2 || counter > 3)
-					{
-						m_pres_cells[x][y] = false;
-					}
+					m_pres_cells[x][y] = true;
+				}
+				else if (m_past_cells[x][y] == true && (counter < 2 || counter > 3))
+				{
+					m_pres_cells[x][y] = false;
 				}
 				else
 				{
-					if (counter == 3)
-					{
-						m_pres_cells[x][y] = true;
-					}
+					m_pres_cells[x][y] = m_past_cells[x][y];
 				}
 			}
 		}
@@ -138,6 +133,13 @@ void Application::randomize()
 		for (int y = 0; y < WINDOW_SY / CELL_SIZE; y++)
 		{
 			m_pres_cells[x][y] = dis(gen) % 2;
+			std::copy
+			(
+				&m_pres_cells[0][0],
+				&m_pres_cells[0][0] + (WINDOW_SX / CELL_SIZE) * (WINDOW_SY / CELL_SIZE),
+				&m_past_cells[0][0]
+			);
+			
 		}
 	}
 
