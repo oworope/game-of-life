@@ -26,7 +26,7 @@ void Application::run()
 				{
 					for (int j = -1; j < 2; j++)
 					{
-						if (m_pres_cells[x + i][y + j] == true)
+						if (m_pres_cells[x + i][y + j] == true && i != 0 && j != 0)
 
 						// i != 0 && j != 0
 						{
