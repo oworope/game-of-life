@@ -26,14 +26,13 @@ void Application::run()
 				{
 					for (int j = -1; j < 2; j++)
 					{
-						if (m_pres_cells[x + i][y + j] == true && i != 0 && j != 0)
-
-						// i != 0 && j != 0
+						if (m_past_cells[x + i][y + j] == true && (i != 0 || j != 0))
 						{
-							counter++;
+							++counter;
 						}
 					}
 				}
+				
 				if (m_past_cells[x][y] == false && counter == 3)
 				{
 					m_pres_cells[x][y] = true;
@@ -73,7 +72,6 @@ void Application::run()
 		m_window.display();
 
 		// copy present state to past
-		// std::copy(std::begin(m_pres_cells), std::end(m_pres_cells), std::begin(m_past_cells));
 		std::copy
 		(
 			&m_pres_cells[0][0],
