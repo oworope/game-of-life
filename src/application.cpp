@@ -7,7 +7,7 @@ Application::Application()
 	: m_window(sf::VideoMode(WINDOW_SX, WINDOW_SY), "Game of life")
 {
 	// m_window.setVerticalSyncEnabled(true);
-	m_window.setFramerateLimit(10);
+	m_window.setFramerateLimit(15);
 	randomize();
 }
 

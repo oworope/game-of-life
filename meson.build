@@ -1,6 +1,6 @@
 project('game-of-life', 'cpp',
   default_options: 'default_library=static',
-  version: '0.1.0')
+  version: '1.0.0')
 
 src = [
   'src/main.cpp',
